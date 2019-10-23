@@ -1,7 +1,7 @@
 public class StudentRecord
 {
    //contains scores.length values and scores.length > 1
-   private int [] scores;
+   private static int [] scores;
    
    //Constructs a StudentRecord object with an array of scores.
    public StudentRecord(int [] s)
@@ -13,7 +13,7 @@ public class StudentRecord
     *  whose subscripts are between first and last, inclusive
     *  PRECONDITION: 0 <= first <= last < scores.length
     */
-   public double average(int first, int last)
+   public static double average(int first, int last)
    {
        double sum=0.0;
        for (int i = first; i<=last; i++)
@@ -26,7 +26,7 @@ public class StudentRecord
    /** returns true if each successive value in scores is greater than
     *  or equal to the previous value; false otherwise.
     */
-   private boolean hasImproved()
+   private static boolean hasImproved()
    {
       int a = 0;
       int count = 0;
@@ -38,7 +38,9 @@ public class StudentRecord
               count++;
         }
    } 
-   return (count==(scores.length-1)); //done
+   
+   boolean imp = (count==(scores.length-1));
+   return imp;//done
 }
    
    /** if the values in scores have imrpoved, returns the average of
@@ -46,33 +48,14 @@ public class StudentRecord
     *  scores.length/2; otherwise, returns the average of all the 
     *  values in scores
     */
-   public double finalAverage()
+   public static double finalAverage(boolean imp, int first, int last)
    {
-   int a = 0;
-      int count = 0;
-      for (int i = 0; i<scores.length; i++)
-      {
-          if (scores[i]>a)
-          {
-              a = scores[i];
-              count++;
-        }
-   } 
-   boolean improve = (count==(scores.length-1));
-   double sum = 0.0;
-   if (improve)
-   {
-       int first = scores.length/2;
-       for (int i = first; i<=scores.length-1; i++)
+       if  (imp)
        {
-           sum+=scores[i];
+           first = scores.length/2;
+           scores.average(first, last);
         }
-       return sum/(scores.length-first);
-    }
-   for (int i = 0; i<scores.length; i++)
-   {
-       sum+=scores[i];
-    }
-    return sum/(scores.length);
+        scores.average(first, last);
+   
 }
 }
